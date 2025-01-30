@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="de"> <!-- Startet das HTML-Dokument und setzt die Sprache auf Deutsch -->
+<head>
+    <meta charset="UTF-8"> <!-- Setzt die Zeichencodierung auf UTF-8, um Sonderzeichen korrekt darzustellen -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Macht die Seite auf mobilen Geräten responsiv -->
+    <title>FAT und NTFS - Informationen</title> <!-- Setzt den Titel der Seite, der im Browser-Tab angezeigt wird -->
+    <style>
+        /* Hier beginnt der eigentliche CSS-Block, um das Design der Seite zu definieren */
+        body {
+            font-family: Arial, sans-serif; /* Setzt die Schriftart auf Arial */
+            line-height: 1.6; /* Legt den Zeilenabstand fest */
+            margin: 0; /* Entfernt den Standard-Außenabstand */
+            padding: 0; /* Entfernt den Standard-Innenabstand */
+            background-color: white; /* Setzt die Hintergrundfarbe auf weiß */
+            color: black; /* Setzt die Textfarbe auf schwarz */
+        }
+        header {
+            background-color: lightblue; /* Setzt den Hintergrund des Headers auf hellblau */
+            color: white; /* Setzt die Textfarbe im Header auf weiß */
+            padding: 1em 0; /* Fügt ober- und unterhalb des Headers Abstand hinzu */
+            text-align: center; /* Zentriert den Text im Header */
+        }
+        section {
+            padding: 20px; /* Fügt allen Sektionen Abstand hinzu */
+            margin: 20px auto; /* Setzt den äußeren Abstand und zentriert die Sektionen */
+            max-width: 800px; /* Begrenzte Breite für die Sektionen */
+            background-color: lightgray; /* Setzt den Hintergrund der Sektionen auf hellgrau */
+            border-radius: 10px; /* Fügt runde Ecken hinzu */
+        }
+        h1, h2 {
+            color: navy; /* Setzt die Farbe der Überschriften auf Marineblau */
+        }
+        table {
+            width: 100%; /* Stellt sicher, dass die Tabelle die volle Breite einnimmt */
+            border-collapse: collapse; /* Stellt sicher, dass die Tabellenränder zusammenfallen */
+            margin: 20px 0; /* Fügt der Tabelle Abstand oben und unten hinzu */
+        }
+        table, th, td {
+            border: 1px solid black; /* Fügt den Tabellenzellen einen schwarzen Rand hinzu */
+        }
+        th, td {
+            padding: 10px; /* Fügt den Zellen Abstand hinzu */
+            text-align: left; /* Richtet den Text linksbündig aus */
+        }
+        ul {
+            margin: 10px 0; /* Fügt den Listen oben und unten Abstand hinzu */
+            padding: 0 20px; /* Fügt den Listen innen Abstand hinzu */
+        }
+        footer {
+            text-align: center; /* Zentriert den Text im Footer */
+            padding: 10px; /* Fügt dem Footer Abstand hinzu */
+            background-color: lightblue; /* Setzt den Hintergrund des Footers auf hellblau */
+            color: white; /* Setzt die Textfarbe im Footer auf weiß */
+            margin-top: 20px; /* Fügt dem Footer oben Abstand hinzu */
+        }
+        a {
+            color: blue; /* Setzt die Linkfarbe auf blau */
+            text-decoration: none; /* Entfernt die Unterstreichung der Links */
+        }
+        .bügeleisen {
+            display: flex;               /* Aktiviert das flexible Layout */
+            align-items: center;         /* Zentriert Bild und Text vertikal */
+            gap: 20px;                   /* Fügt Abstand zwischen Bild und Text ein */
+            margin-bottom: 20px;         /* Fügt unten Abstand zwischen Elementen ein */
+        }
+
+        .bügeleisen img {
+            height: 100px;               /* Legt die Bildhöhe fest */
+            width: auto;                 /* Erhält die Bildproportionen */
+        }
+        form {                    /* Stile für das Formular */
+            background-color: lightgray;  /* Hintergrundfarbe des Formulars auf hellgrau setzen */
+            padding: 20px;          /* 20px Abstand innen im Formular */
+            border-radius: 10px;    /* Ecken des Formulars werden abgerundet */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Leichter Schatten um das Formular */
+        }
+
+        .form-group {              /* Stile für die .form-group Klasse (z.B. für jedes Formularelement) */
+            margin-bottom: 15px;    /* 15px Abstand unten zwischen den Elementen */
+        }
+
+        label {                   /* Stile für das <label>-Tag */
+            display: block;         /* Label wird auf einer neuen Zeile angezeigt */
+            font-weight: bold;      /* Text im Label wird fett */
+            margin-bottom: 5px;     /* 5px Abstand unten vom Label */
+        }
+
+        input[type="text"],       /* Stile für Textfelder */
+        input[type="email"],      /* Stile für E-Mail-Felder */
+        textarea {                 /* Stile für Textareas (mehrzeilige Felder) */
+            width: 100%;           /* Breite auf 100% der verfügbaren Fläche setzen */
+            padding: 10px;         /* 10px Abstand innen im Eingabefeld */
+            margin: 5px 0 15px;    /* 5px Abstand oben, 0 seitlich und 15px unten */
+            border: 1px solid #ccc; /* 1px grauer Rand um das Eingabefeld */
+            border-radius: 5px;    /* Ecken des Feldes werden abgerundet */
+            font-size: 1rem;       /* Schriftgröße auf 1rem setzen */
+        }
+
+        input[type="checkbox"] {  /* Stile für Checkboxen */
+            margin-right: 10px;    /* 10px Abstand rechts von der Checkbox */
+        }
+
+        textarea {                /* Stile für Textareas */
+            resize: vertical;     /* Textarea nur in der Höhe veränderbar */
+        }
+
+        button[type="submit"] {   /* Stile für den Absende-Button */
+            background-color: navy;  /* Dunkelblauer Hintergrund */
+            color: white;           /* Weiße Schriftfarbe */
+            padding: 10px 15px;     /* Innenabstand von 10px oben/unten und 15px seitlich */
+            border: none;           /* Kein Rand um den Button */
+            border-radius: 5px;     /* Ecken des Buttons abgerundet */
+            font-size: 1rem;        /* Schriftgröße auf 1rem setzen */
+            cursor: pointer;       /* Mauszeiger wird zur Hand, wenn man drüber fährt */
+        }
+
+        button[type="submit"]:hover {  /* Stile, wenn der Button mit der Maus überfahren wird */
+            background-color: darkblue; /* Hintergrundfarbe des Buttons wird dunkelblau */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>FAT und NTFS</h1> <!-- Hauptüberschrift für das Thema -->
+    </header>
+    <section>
+        <h2>Frage 1: Wofür stehen die Abkürzungen FAT und NTFS?</h2>
+        <p><strong>FAT:</strong> File Allocation Table</p> <!-- Definition von FAT -->
+        <p><strong>NTFS:</strong> New Technology File System</p> <!-- Definition von NTFS -->
+    </section>
+    <section>
+        <h2>Frage 2: Vergleich zwischen FAT16 und FAT32</h2>
+        <h3>FAT16:</h3> <!-- Unterüberschrift für FAT16 -->
+        <ul>
+            <li>Dateinamen auf das 8.3-Schema beschränkt.</li>
+            <li>Nutzt 16-Bit-Adressen, maximal 65.536 Cluster.</li>
+            <li>Unterstützt Partitionen bis zu 2 GB (unter einigen Betriebssystemen bis zu 4 GB).</li>
+            <li>Einzelne Dateien können maximal 2 GB groß sein.</li>
+            <li>Unterstützt von älteren Betriebssystemen wie MS-DOS oder Windows 95.</li>
+            <li>Höhere Wahrscheinlichkeit von Ineffizienz bei Dateisystemfehlern oder Defragmentierung.</li>
+        </ul>
+        <h3>FAT32:</h3> <!-- Unterüberschrift für FAT32 -->
+        <ul>
+            <li>Dateinamen mit bis zu 255 Zeichen.</li>
+            <li>Nutzt 32-Bit-Adressen, maximal 4.294.967.296 Cluster.</li>
+            <li>Unterstützt Partitionen bis zu 2 TB (manchmal bis 16 TB, je nach Clustergröße).</li>
+            <li>Einzelne Dateien können maximal 4 GB groß sein.</li>
+            <li>Unterstützt von modernen Betriebssystemen wie Windows 98 und XP.</li>
+            <li>Bietet verbesserte Stabilität und Fehlererkennung.</li>
+        </ul>
+        <p><strong>Zusammenfassung:</strong> FAT16 eignet sich für ältere Geräte und kleinere Partitionen, während FAT32 größere Partitionen und Dateien unterstützt. Beide Systeme wurden durch neuere Dateisysteme wie NTFS und exFAT ersetzt.</p>
+    </section>
+    <section>
+        <h2>Frage 3: Maximale Anzahl von Clustern</h2>
+        <p><strong>FAT16:</strong> Verwendet 16-Bit-Adressen, maximal 65.536 Cluster.</p> <!-- Erklärung der Clusteranzahl in FAT16 -->
+        <h3>Clustergröße und Speicherbegrenzung:</h3> <!-- Unterüberschrift zur Clustergröße -->
+        <ul>
+            <li>Maximal erlaubte Clustergröße für FAT16: 32 KB.</li>
+            <li>Maximale Partitionsgröße: 32 KB × 65.536 Cluster = 2 GB.</li>
+        </ul>
+        <h3>4-GB-Grenze bei FAT16:</h3> <!-- Weitere Erklärung zur 4-GB-Grenze -->
+        <ul>
+            <li>Mit 64 KB Clustergröße: 64 KB × 65.536 Cluster = 4 GB.</li>
+        </ul>
+        <h3>Technische Einschränkungen:</h3> <!-- Erklärung der technischen Einschränkungen -->
+        <ul>
+            <li>Ältere BIOS-Versionen und Betriebssysteme konnten nur 2 GB Partitionen adressieren.</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Frage 4: Maximale Dateigröße und Partitionsgröße</h2>
+        <table> <!-- Tabelle, die die maximalen Größen von Dateisystemen zeigt -->
+            <tr>
+                <th>Dateisystem</th>
+                <th>Maximale Dateigröße</th>
+                <th>Maximale Partitionsgröße</th>
+            </tr>
+            <tr>
+                <td>FAT</td>
+                <td>4 GB</td>
+                <td>2 TB</td>
+            </tr>
+            <tr>
+                <td>NTFS</td>
+                <td>Nahezu unbegrenzt</td>
+                <td>Bis zu 8 PB</td>
+            </tr>
+        </table>
+        <h3>Sicherheit:</h3>
+        <ul>
+            <li><strong>FAT:</strong> Keine Dateiberechtigungen oder Verschlüsselung.</li>
+            <li><strong>NTFS:</strong> Unterstützt Dateiberechtigungen, Verschlüsselung und Journaling.</li>
+        </ul>
+        <h3>Kompatibilität:</h3>
+        <ul>
+            <li><strong>FAT:</strong> Sehr kompatibel mit älteren Systemen und Geräten.</li>
+            <li><strong>NTFS:</strong> Hauptsächlich für Windows, eingeschränkt kompatibel mit anderen Betriebssystemen.</li>
+        </ul>
+    </section>
+    <section>
+        <h3>Windows:</h3>
+    <div class="bügeleisen">
+        <img src="Bilder/windows.png" alt="Windows">
+        <ul>
+            <li>NTFS: Standard für interne Festplatten, vollständig unterstützt.</li>
+            <li>FAT32: Unterstützt, besonders für USB-Sticks.</li>
+            <li>exFAT: Unterstützt, besonders für große externe Laufwerke.</li>
+            <li>FAT16: Unterstützt, aber selten genutzt.</li>
+        </ul>
+    </div>
+    <h3>macOS:</h3>
+    <div class="bügeleisen">
+        <img src="Bilder/apple.png" alt="macOS">
+        <ul>
+            <li>NTFS: Lesen möglich, Schreiben mit Zusatzsoftware.</li>
+            <li>FAT32 und exFAT: Vollständig unterstützt.</li>
+        </ul>
+    </div>
+    <h3>Linux:</h3>
+    <div class="bügeleisen">
+        <img src="Bilder/linux.jpg" alt="Linux">
+        <ul>
+            <li>Ext4: Standard für die meisten Distributionen.</li>
+            <li>NTFS: Mit passenden Treibern vollständig lesbar und beschreibbar.</li>
+            <li>FAT32 und exFAT: Unterstützung je nach Distribution.</li>
+        </ul>
+    </div>
+        <h3>Andere Systeme:</h3> <!-- Weitere Unterstützung von FAT und NTFS -->
+        <ul>
+            <li>FAT32: Universell unterstützt.</li>
+            <li>exFAT: Unterstützt in modernen Geräten.</li>
+            <li>NTFS: Eingeschränkt unterstützt.</li>
+        </ul>
+        <p><strong>Zusammenfassung:</strong> FAT32 ist höchst kompatibel, aber limitiert bei Dateigrößen. NTFS ist optimal für Windows, während exFAT ideal für externe Laufwerke ist.</p>
+    </section>
+    <section>
+        <h3>Weitere Infos</h3>
+        <ul>
+            <li>
+                Erfahre mehr über das Dateisystem FAT auf <a href="https://de.wikipedia.org/wiki/File_Allocation_Table">Wikipedia</a> <!-- Link zur Wikipedia-Seite über FAT -->
+            </li>
+            <li>
+                Vertiefe dein Wissen über NTFS auf <a href="https://de.wikipedia.org/wiki/NTFS">Wikipedia</a> <!-- Link zur Wikipedia-Seite über NTFS -->
+            </li>
+            <li>
+                Video über die Dateisysteme (FAT & NTFS) <a href="video/video.html">Video</a> <!-- Link zu einem Video -->
+            </li>
+        </ul>
+    </section>
+    <section>
+        <h2>Kontaktformular</h2> <!-- Überschrift für das Kontaktformular -->
+        <form action="mailto:daniel.b108@gso.schule.koeln" method="POST" enctype="text/plain"> <!-- Start des Formulars -->
+            <div class="form-group">
+                <label for="name">Name:</label> <!-- Eingabefeld für den Namen -->
+                <input type="text" name="name" id="name" placeholder="Gib deinen Namen ein" required> <!-- Name Eingabefeld -->
+            </div>
+            <div class="form-group">
+                <label for="email">E-Mail:</label> <!-- Eingabefeld für die E-Mail -->
+                <input type="email" name="email" id="email" placeholder="Gib deine E-Mail ein" required> <!-- E-Mail Eingabefeld -->
+            </div>
+            <div class="form-group">
+                <label for="message">Nachricht:</label> <!-- Eingabefeld für Nachricht -->
+                <textarea name="message" id="message" placeholder="Schreibe deine Nachricht hier..." rows="5" required></textarea> <!-- Nachricht Eingabefeld -->
+            </div>
+            <div class="form-group">
+                <label for="privacy">
+                    <input type="checkbox" name="privacy" id="privacy" required> <!-- Checkbox für Zustimmung -->
+                    Ich stimme der <a href="#">Datenschutzerklärung</a> zu <!-- Link zur Datenschutzerklärung -->
+                </label>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="submit-btn">Absenden</button> <!-- Absenden-Button -->
+            </div>
+        </form>
+    </section>
+    <footer>
+        <p>&copy; 2025 Informationen zu Dateisystemen</p> <!-- Copyright-Text -->
+        <p>
+            <a href="../index.html">Zurück zur Startseite</a> | 
+            <a href="#">Zurück zum Anfang</a> <!-- Der neue Link "Zurück zum Anfang" -->
+        </p>
+    </footer>
+    
+</body>
+</html>
